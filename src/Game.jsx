@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
 import GameContainer from "./GameContainer";
+import MenuNav from "./assets/MenuNav/MenuNav";
 
 function Game() {
 	return (
 		<div
-			className="md:w-screen md:h-screen"
+			className="relative md:w-screen md:h-screen"
 			id="game-window"
 		>
 			<h1
@@ -16,6 +17,7 @@ function Game() {
 			</h1>
 
 			<GameContainer />
+			<MenuNav />
 		</div>
 	);
 }
