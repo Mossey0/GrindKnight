@@ -1,21 +1,10 @@
 import React from "react";
-import HuntingSpot from "./HuntingSpot";
 
 function HungtingGrounds() {
 	return (
-		<div className="relative bg-green-400 size-full">
-			<HuntingSpot
-				top={"12px"}
-				right={"100px"}
-			/>
-			<HuntingSpot
-				bottom={"24px"}
-				left={"120px"}
-			/>
-			<HuntingSpot
-				top={1 / 2}
-				left={1 / 2}
-			/>
+		<div className="relative flex flex-col items-center w-full md:w-2/3 h-96 md:h-full">
+			<h1 className="text-2xl">Hunting Grounds</h1>
+			<div className="w-full"></div>
 		</div>
 	);
 }
