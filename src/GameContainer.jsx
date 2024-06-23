@@ -7,7 +7,7 @@ import HungtingGrounds from "./assets/FightSection/HungtingGrounds";
 function GameContainer() {
 	return (
 		<div
-			className="flex flex-col flex-wrap gap-5 md:gap-0 w-full h-4/5"
+			className="flex flex-col flex-wrap gap-5 md:gap-0 w-full h-4/5 md:h-11/12"
 			id="game-container"
 		>
 			{false && (
@@ -19,6 +19,7 @@ function GameContainer() {
 			)}
 			{true && (
 				<>
+					<DescriptionBlock />
 					<HungtingGrounds />
 					<ImgBlock />
 				</>

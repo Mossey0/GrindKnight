@@ -7,18 +7,20 @@ import Stats from "./assets/BuildBlocks/Stats";
 function Game() {
 	return (
 		<div
-			className="relative md:w-screen md:h-screen"
+			className="md:w-screen md:h-screen"
 			id="game-window"
 		>
-			<h1
-				className="bg-gray-300 p-2 w-full h-12 font-bold font-mono text-2xl"
-				id="game-name"
-			>
-				GrindKnight
-			</h1>
+			<div className="flex justify-between items-center bg-gray-700 p-2 md:w-full md:h-12 text-white">
+				<span
+					className="font-bold font-mono text-2xl"
+					id="game-name"
+				>
+					GrindKnight
+				</span>
+				<MenuNav />
+			</div>
 			<Stats />
 			<GameContainer />
-			<MenuNav />
 		</div>
 	);
 }
