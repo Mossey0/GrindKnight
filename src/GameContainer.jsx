@@ -2,12 +2,12 @@ import React from "react";
 import SectionBlocks from "./assets/BuildBlocks/SectionBlocks";
 import ImgBlock from "./assets/BuildBlocks/ImgBlock";
 import DescriptionBlock from "./assets/BuildBlocks/DescriptionBlock";
-import HungtingGrounds from "./assets/FightSection/Hunt/HungtingGrounds";
+import HungtingGrounds from "./assets/FightSection/HungtingGrounds";
 
 function GameContainer() {
 	return (
 		<div
-			className="flex flex-col flex-wrap gap-5 md:gap-0 pt-12 pb-32 w-full h-full"
+			className="flex flex-col flex-wrap gap-5 md:gap-0 w-full h-4/5"
 			id="game-container"
 		>
 			{false && (
