@@ -2,7 +2,7 @@ import React from "react";
 
 function DescriptionBlock() {
 	return (
-		<div className="p-4 w-full md:w-1/3 h-80 md:h-full md:overflow-y-auto">
+		<div className="p-4 w-full md:w-1/5 h-80 md:h-full md:overflow-y-auto">
 			<h1>Description</h1>
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus neque

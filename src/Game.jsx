@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import GameContainer from "./GameContainer";
 import MenuNav from "./assets/MenuNav/MenuNav";

@@ -1,5 +1,4 @@
 import React from "react";
-import monsters from "../MonsterFiles/Monsters";
 import locations from "../LocationFiles.jsx/Locations";
 
 function HungtingGrounds() {
@@ -45,7 +44,7 @@ function HungtingGrounds() {
 		);
 	};
 	return (
-		<div className="relative flex flex-col items-center w-full md:w-1/3 h-96 md:h-full">
+		<div className="relative flex flex-col items-center w-full md:w-3/5 h-96 md:h-full">
 			<h1 className="text-2xl">Hunting Grounds</h1>
 			<div className="flex flex-wrap justify-center gap-6 pt-10 w-full h-5/6 overflow-y-auto">
 				{Object.values(locations).map((location, index) => {
