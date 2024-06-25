@@ -51,6 +51,7 @@ const GameProvider = ({ children }) => {
 			value={{
 				playerStats,
 				messageLog,
+				currentNav,
 				changeMessageLog,
 				changeNavigation,
 				changePlayerStats,
