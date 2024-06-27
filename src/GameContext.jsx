@@ -4,7 +4,7 @@ const GameContext = createContext();
 
 const GameProvider = ({ children }) => {
 	const [messageLog, setMessageLog] = useState([]);
-	const [currentNav, setCurrentNav] = useState(0);
+	const [currentNav, setCurrentNav] = useState("Home");
 	const [playerStats, setPlayerStats] = useState({
 		playerHealth: 100,
 		playerAttack: 10,
@@ -42,7 +42,7 @@ const GameProvider = ({ children }) => {
 				}
 				return prevLog;
 			});
-		}, 2000);
+		}, 5000);
 		return () => clearInterval(timer);
 	}, []);
 

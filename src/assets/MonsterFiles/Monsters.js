@@ -1,73 +1,168 @@
 class Monster {
-	constructor(name, health, attack, goldReward, packSize) {
+	constructor(name, health, attack, packSize, rank) {
 		this.name = name;
 		this.health = health;
 		this.attack = attack;
-		this.goldReward = goldReward;
 		this.packSize = packSize;
+		this.rank = rank;
 	}
-	getHealth = (extraAmount) => {
-		return this.health * (this.packSize * extraAmount);
+	getHealth = () => {
+		return this.health * this.packSize;
 	};
-	getPower = (extraAmount) => {
-		return this.attack * (this.packSize * extraAmount);
-	};
-	getGold = (extraAmount) => {
-		return this.goldReward * (this.packSize * extraAmount);
+	getAttack = () => {
+		return this.attack * this.packSize;
 	};
 }
 
 const monsters = {
-	slime: new Monster("Slime", 10, 5, 1, 10),
-	rat: new Monster("Rat", 15, 8, 2, 8),
-	goblin: new Monster("Goblin", 20, 12, 3, 6),
-	bat: new Monster("Bat", 25, 10, 2, 12),
-	skeleton: new Monster("Skeleton", 30, 15, 4, 5),
-	zombie: new Monster("Zombie", 40, 18, 5, 4),
-	wolf: new Monster("Wolf", 50, 22, 6, 3),
-	orc: new Monster("Orc", 60, 25, 7, 3),
-	wraith: new Monster("Wraith", 70, 28, 8, 2),
-	harpy: new Monster("Harpy", 80, 32, 9, 2),
-	troll: new Monster("Troll", 90, 35, 10, 2),
-	ogre: new Monster("Ogre", 100, 40, 12, 1),
-	ghoul: new Monster("Ghoul", 120, 45, 14, 1),
-	minotaur: new Monster("Minotaur", 140, 50, 16, 1),
-	cyclops: new Monster("Cyclops", 160, 55, 18, 1),
-	manticore: new Monster("Manticore", 180, 60, 20, 1),
-	chimera: new Monster("Chimera", 200, 65, 22, 1),
-	wyvern: new Monster("Wyvern", 220, 70, 25, 1),
-	basilisk: new Monster("Basilisk", 240, 75, 28, 1),
-	griffin: new Monster("Griffin", 260, 80, 30, 1),
-	hydra: new Monster("Hydra", 280, 85, 32, 1),
-	phoenix: new Monster("Phoenix", 300, 90, 35, 1),
-	golem: new Monster("Golem", 320, 95, 38, 1),
-	behemoth: new Monster("Behemoth", 340, 100, 40, 1),
-	leviathan: new Monster("Leviathan", 360, 110, 45, 1),
-	dragon: new Monster("Dragon", 380, 120, 50, 1),
-	archdemon: new Monster("Archdemon", 400, 130, 55, 1),
-	lich: new Monster("Lich", 420, 140, 60, 1),
-	vampireLord: new Monster("Vampire Lord", 440, 150, 65, 1),
-	darkKnight: new Monster("Dark Knight", 460, 160, 70, 1),
-	elderDragon: new Monster("Elder Dragon", 480, 170, 75, 1),
-	ancientWyvern: new Monster("Ancient Wyvern", 500, 180, 80, 1),
-	titan: new Monster("Titan", 520, 190, 85, 1),
-	celestialBeing: new Monster("Celestial Being", 540, 200, 90, 1),
-	fallenAngel: new Monster("Fallen Angel", 560, 210, 95, 1),
-	demonLord: new Monster("Demon Lord", 580, 220, 100, 1),
-	deathKnight: new Monster("Death Knight", 600, 230, 105, 1),
-	voidBeast: new Monster("Void Beast", 620, 240, 110, 1),
-	abyssalHorror: new Monster("Abyssal Horror", 640, 250, 115, 1),
-	chaosDragon: new Monster("Chaos Dragon", 660, 260, 120, 1),
-	hellfireElemental: new Monster("Hellfire Elemental", 680, 270, 125, 1),
-	celestialDragon: new Monster("Celestial Dragon", 700, 280, 130, 1),
-	netherLich: new Monster("Nether Lich", 720, 290, 135, 1),
-	archangel: new Monster("Archangel", 740, 300, 140, 1),
-	primordialTitan: new Monster("Primordial Titan", 760, 310, 145, 1),
-	cosmicSerpent: new Monster("Cosmic Serpent", 780, 320, 150, 1),
-	timeWraith: new Monster("Time Wraith", 800, 330, 155, 1),
-	voidDragon: new Monster("Void Dragon", 820, 340, 160, 1),
-	celestialPhoenix: new Monster("Celestial Phoenix", 840, 350, 165, 1),
-	supremeDeity: new Monster("Supreme Deity", 860, 360, 170, 1),
+	F: {
+		// F Rank
+		slime: new Monster("Slime", 5, 2, 10, "F"),
+		rat: new Monster("Rat", 3, 1, 20, "F"),
+		feralDog: new Monster("Feral Dog", 8, 3, 5, "F"),
+		goblin: new Monster("Goblin", 10, 4, 8, "F"),
+		gremlin: new Monster("Gremlin", 7, 5, 12, "F"),
+		spider: new Monster("Spider", 4, 2, 15, "F"),
+		giantRat: new Monster("Giant Rat", 15, 5, 6, "F"),
+		largeFireAnt: new Monster("Large Fire Ant", 8, 4, 30, "F"),
+		largeSpider: new Monster("Large Spider", 12, 6, 8, "F"),
+		kobold: new Monster("Kobold", 14, 7, 10, "F"),
+		giantSoldierAnt: new Monster("Giant Soldier Ant", 20, 8, 25, "F"),
+		antQueen: new Monster("Ant Queen", 50, 10, 1, "F"),
+		bat: new Monster("Bat", 3, 2, 25, "F"),
+	},
+
+	D: {
+		// D Rank
+		giantWasp: new Monster("Giant Wasp", 30, 25, 15, "D"),
+		hoboGoblin: new Monster("Hobo Goblin", 40, 30, 5, "D"),
+		skeletonArcher: new Monster("Skeleton Archer", 35, 35, 10, "D"),
+		zombie: new Monster("Zombie", 50, 20, 20, "D"),
+		wolf: new Monster("Wolf", 45, 35, 8, "D"),
+		harpy: new Monster("Harpy", 40, 40, 6, "D"),
+		bandit: new Monster("Bandit", 55, 45, 7, "D"),
+		ghoul: new Monster("Ghoul", 60, 50, 5, "D"),
+		giantScorpion: new Monster("Giant Scorpion", 70, 60, 3, "D"),
+		dryad: new Monster("Dryad", 45, 55, 4, "D"),
+		mudGolem: new Monster("Mud Golem", 100, 40, 2, "D"),
+		swampTroll: new Monster("Swamp Troll", 120, 70, 2, "D"),
+		ironGolem: new Monster("Iron Golem", 150, 80, 1, "D"),
+		wraith: new Monster("Wraith", 80, 90, 3, "D"),
+		cyclops: new Monster("Cyclops", 200, 100, 1, "D"),
+		mummifiedWarrior: new Monster("Mummified Warrior", 90, 85, 4, "D"),
+		sandWorm: new Monster("Sand Worm", 180, 95, 2, "D"),
+		yeti: new Monster("Yeti", 200, 110, 1, "D"),
+		iceElemental: new Monster("Ice Elemental", 130, 120, 2, "D"),
+		giantSpider: new Monster("Giant Spider", 110, 100, 3, "D"),
+		faerie: new Monster("Faerie", 40, 70, 8, "D"),
+		unicorn: new Monster("Unicorn", 160, 130, 1, "D"),
+		fireElemental: new Monster("Fire Elemental", 140, 130, 2, "D"),
+		lavaGolem: new Monster("Lava Golem", 250, 100, 1, "D"),
+		salamander: new Monster("Salamander", 100, 110, 4, "D"),
+		merfolk: new Monster("Merfolk", 80, 80, 6, "D"),
+		seaSerpent: new Monster("Sea Serpent", 230, 120, 1, "D"),
+		centaur: new Monster("Centaur", 140, 125, 3, "D"),
+		paperGolem: new Monster("Paper Golem", 180, 70, 2, "D"),
+		crystalGolem: new Monster("Crystal Golem", 240, 110, 1, "D"),
+		giantBat: new Monster("Giant Bat", 80, 90, 6, "D"),
+		shinySlime: new Monster("Shiny Slime", 120, 60, 5, "D"),
+	},
+
+	C: {
+		// C Rank
+		ancientGolem: new Monster("Ancient Golem", 500, 200, 1, "C"),
+		giantEagle: new Monster("Giant Eagle", 300, 250, 3, "C"),
+		hellHound: new Monster("Hell Hound", 350, 300, 5, "C"),
+		elementalBear: new Monster("Elemental Bear", 450, 350, 2, "C"),
+		griffon: new Monster("Griffon", 400, 400, 2, "C"),
+		wyvern: new Monster("Wyvern", 600, 450, 1, "C"),
+		skeletonKnight: new Monster("Skeleton Knight", 450, 400, 3, "C"),
+		warGolem: new Monster("War Golem", 800, 350, 1, "C"),
+		ghostlyCommander: new Monster("Ghostly Commander", 350, 500, 2, "C"),
+		thunderbird: new Monster("Thunderbird", 400, 450, 2, "C"),
+		stormGiant: new Monster("Storm Giant", 900, 600, 1, "C"),
+		infernoSpawn: new Monster("Inferno Spawn", 500, 550, 2, "C"),
+		iceGolem: new Monster("Ice Golem", 750, 400, 1, "C"),
+		frostGiant: new Monster("Frost Giant", 850, 550, 1, "C"),
+		polarBearWarrior: new Monster("Polar Bear Warrior", 600, 500, 2, "C"),
+		shadowBeast: new Monster("Shadow Beast", 400, 600, 3, "C"),
+		umbralHunter: new Monster("Umbral Hunter", 350, 650, 3, "C"),
+		voidWalker: new Monster("Void Walker", 500, 550, 2, "C"),
+		pegasus: new Monster("Pegasus", 450, 400, 2, "C"),
+		cloudGiant: new Monster("Cloud Giant", 950, 500, 1, "C"),
+		giantSquid: new Monster("Giant Squid", 700, 600, 1, "C"),
+	},
+
+	B: {
+		// B Rank
+		oni: new Monster("Oni", 700, 500, 1, "C"),
+		youngDragon: new Monster("Young Dragon", 1200, 800, 1, "B"),
+		manticore: new Monster("Manticore", 1000, 900, 1, "B"),
+		chimera: new Monster("Chimera", 1100, 950, 1, "B"),
+		starWolf: new Monster("Star Wolf", 900, 1000, 3, "B"),
+		vampire: new Monster("Vampire", 1300, 1100, 1, "B"),
+		lich: new Monster("Lich", 1500, 1300, 1, "B"),
+		drakeRider: new Monster("Drake Rider", 1000, 1200, 2, "B"),
+		nightStalker: new Monster("Night Stalker", 1100, 1300, 2, "B"),
+		celestialConstruct: new Monster("Celestial Construct", 1600, 1100, 1, "B"),
+		deathKnight: new Monster("Death Knight", 1700, 1200, 1, "B"),
+		soulReaver: new Monster("Soul Reaver", 1200, 1600, 1, "B"),
+		chaosBeast: new Monster("Chaos Beast", 1300, 1400, 2, "B"),
+		mimic: new Monster("Mimic", 1500, 1300, 1, "B"),
+	},
+
+	A: {
+		// A Rank
+		dragon: new Monster("Dragon", 3000, 2000, 1, "A"),
+		kraken: new Monster("Kraken", 3500, 1800, 1, "A"),
+		hydra: new Monster("Hydra", 4000, 2200, 1, "A"),
+		phoenix: new Monster("Phoenix", 3200, 2500, 1, "A"),
+		archlich: new Monster("Archlich", 2800, 3000, 1, "A"),
+		colossalGiant: new Monster("Colossal Giant", 5000, 2800, 1, "A"),
+	},
+
+	S: {
+		// S Rank
+		DemonLord: new Monster("Demon Lord", 8000, 4000, 1, "S"),
+		worldSerpent: new Monster("World Serpent", 10000, 3500, 1, "S"),
+		dreamEater: new Monster("Dream Eater", 7500, 4500, 1, "S"),
+		voidLeviathan: new Monster("Void Leviathan", 12000, 4000, 1, "S"),
+		abyssalPrince: new Monster("Abyssal Prince", 9000, 5000, 1, "S"),
+	},
+
+	SS: {
+		// SS Rank
+		avatarOfChaos: new Monster("Avatar of Chaos", 20000, 8000, 1, "SS"),
+		primorialDemon: new Monster("Primordial Demon", 18000, 9000, 1, "SS"),
+		ancientDragon: new Monster("Ancient Dragon", 25000, 7500, 1, "SS"),
+		chaosIncarnate: new Monster("Chaos Incarnate", 22000, 8500, 1, "SS"),
+	},
+
+	SSS: {
+		// SSS Rank
+		CosmicDragon: new Monster("Cosmic Dragon", 50000, 15000, 1, "SSS"),
+		infinityPheonix: new Monster("Infinity Phoenix", 45000, 18000, 1, "SSS"),
+		eternityDragon: new Monster("Eternity Dragon", 55000, 17000, 1, "SSS"),
+		livingBlackHole: new Monster("Living Black Hole", 60000, 20000, 1, "SSS"),
+		dimensionalLeviathan: new Monster(
+			"Dimensional Leviathan",
+			70000,
+			19000,
+			1,
+			"SSS"
+		),
+	},
+
+	X: {
+		// X Rank
+		cosmicArchitec: new Monster("Cosmic Architect", 100000, 30000, 1, "X"),
+		outerGod: new Monster("Outer God", 120000, 35000, 1, "X"),
+	},
+
+	XX: {
+		// XX Rank
+		supremeCreator: new Monster("Supreme Creator", 200000, 50000, 1, "XX"),
+	},
 };
 
 export default monsters;

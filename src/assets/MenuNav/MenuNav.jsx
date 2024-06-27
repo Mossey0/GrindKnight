@@ -5,6 +5,10 @@ function MenuNav() {
 	return (
 		<div className="flex flex-wrap justify-around md:w-1/3">
 			<MenuNavButtons
+				name={"Home"}
+				id={"Home"}
+			/>
+			<MenuNavButtons
 				name={"Hunt"}
 				id={"Hunt"}
 			/>
