@@ -5,10 +5,6 @@ function HungtingGrounds() {
 	const [currentMap, setCurrentMap] = useState(null);
 	const [huntingGroundNav, setHuntingGroundNav] = useState("Select");
 
-	const handleChangingGrounds = (id) => {
-		setHuntingGroundNav(id);
-	};
-
 	const handleChangeMap = (map) => {
 		setCurrentMap(map);
 	};
