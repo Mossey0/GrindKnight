@@ -7,7 +7,7 @@ function MenuNavButtons({ name, id }) {
 	return (
 		<button
 			type="button"
-			className="hover:bg-slate-100 rounded-sm w-20 hover:text-black transition-all duration-300"
+			className="hover:bg-slate-100 rounded-sm w-20 h-6 hover:text-black transition-all duration-300"
 			id={id}
 			onClick={() => changeNavigation(id)}
 		>

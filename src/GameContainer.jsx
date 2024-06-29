@@ -4,6 +4,7 @@ import MessageBox from "./assets/BuildBlocks/MessageBox";
 import DescriptionBlock from "./assets/BuildBlocks/DescriptionBlock";
 import HungtingGrounds from "./assets/FightSection/HungtingGrounds";
 import { GameContext } from "./GameContext";
+import RecruitSection from "./assets/RecruitFiles/RecruitSection";
 
 function GameContainer() {
 	const { currentNav } = useContext(GameContext);
@@ -22,7 +23,7 @@ function GameContainer() {
 			{currentNav === "Recruit" && (
 				<>
 					<DescriptionBlock />
-					<SectionBlocks id={1} />
+					<RecruitSection />
 					<MessageBox />
 				</>
 			)}

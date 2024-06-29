@@ -16,7 +16,6 @@ class Monster {
 
 const monsters = {
 	F: {
-		// F Rank
 		slime: new Monster("Slime", 5, 2, 10, "F"),
 		rat: new Monster("Rat", 3, 1, 20, "F"),
 		feralDog: new Monster("Feral Dog", 8, 3, 5, "F"),
@@ -33,7 +32,6 @@ const monsters = {
 	},
 
 	D: {
-		// D Rank
 		giantWasp: new Monster("Giant Wasp", 30, 25, 15, "D"),
 		hoboGoblin: new Monster("Hobo Goblin", 40, 30, 5, "D"),
 		skeletonArcher: new Monster("Skeleton Archer", 35, 35, 10, "D"),
@@ -69,7 +67,6 @@ const monsters = {
 	},
 
 	C: {
-		// C Rank
 		ancientGolem: new Monster("Ancient Golem", 500, 200, 1, "C"),
 		giantEagle: new Monster("Giant Eagle", 300, 250, 3, "C"),
 		hellHound: new Monster("Hell Hound", 350, 300, 5, "C"),
@@ -94,7 +91,6 @@ const monsters = {
 	},
 
 	B: {
-		// B Rank
 		oni: new Monster("Oni", 700, 500, 1, "C"),
 		youngDragon: new Monster("Young Dragon", 1200, 800, 1, "B"),
 		manticore: new Monster("Manticore", 1000, 900, 1, "B"),
@@ -112,7 +108,6 @@ const monsters = {
 	},
 
 	A: {
-		// A Rank
 		dragon: new Monster("Dragon", 3000, 2000, 1, "A"),
 		kraken: new Monster("Kraken", 3500, 1800, 1, "A"),
 		hydra: new Monster("Hydra", 4000, 2200, 1, "A"),
@@ -122,7 +117,6 @@ const monsters = {
 	},
 
 	S: {
-		// S Rank
 		DemonLord: new Monster("Demon Lord", 8000, 4000, 1, "S"),
 		worldSerpent: new Monster("World Serpent", 10000, 3500, 1, "S"),
 		dreamEater: new Monster("Dream Eater", 7500, 4500, 1, "S"),
@@ -131,7 +125,6 @@ const monsters = {
 	},
 
 	SS: {
-		// SS Rank
 		avatarOfChaos: new Monster("Avatar of Chaos", 20000, 8000, 1, "SS"),
 		primorialDemon: new Monster("Primordial Demon", 18000, 9000, 1, "SS"),
 		ancientDragon: new Monster("Ancient Dragon", 25000, 7500, 1, "SS"),
@@ -139,7 +132,6 @@ const monsters = {
 	},
 
 	SSS: {
-		// SSS Rank
 		CosmicDragon: new Monster("Cosmic Dragon", 50000, 15000, 1, "SSS"),
 		infinityPheonix: new Monster("Infinity Phoenix", 45000, 18000, 1, "SSS"),
 		eternityDragon: new Monster("Eternity Dragon", 55000, 17000, 1, "SSS"),
@@ -154,13 +146,11 @@ const monsters = {
 	},
 
 	X: {
-		// X Rank
 		cosmicArchitec: new Monster("Cosmic Architect", 100000, 30000, 1, "X"),
 		outerGod: new Monster("Outer God", 120000, 35000, 1, "X"),
 	},
 
 	XX: {
-		// XX Rank
 		supremeCreator: new Monster("Supreme Creator", 200000, 50000, 1, "XX"),
 	},
 };

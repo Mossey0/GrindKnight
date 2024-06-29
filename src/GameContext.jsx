@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import Decimal from "break_infinity.js";
 
 const GameContext = createContext();
 
@@ -6,12 +7,12 @@ const GameProvider = ({ children }) => {
 	const [messageLog, setMessageLog] = useState([]);
 	const [currentNav, setCurrentNav] = useState("Home");
 	const [playerStats, setPlayerStats] = useState({
-		playerHealth: 100,
-		playerAttack: 10,
-		playerIncome: 10,
-		playerArmySize: 1,
-		playerArtifacts: 0,
-		playerEquipment: 0,
+		playerHealth: new Decimal(1000),
+		playerAttack: new Decimal(20000),
+		playerArmySize: new Decimal(20000),
+		playerArtifacts: new Decimal(20000),
+		playerEquipment: new Decimal(20000),
+		playerIncome: new Decimal(0),
 	});
 
 	const changeMessageLog = (intent, message) => {
@@ -28,9 +29,10 @@ const GameProvider = ({ children }) => {
 	};
 
 	const changePlayerStats = (stat, change) => {
+		const addedNumber = new Decimal(change);
 		setPlayerStats((prevStat) => ({
 			...prevStat,
-			[stat]: (prevStat[stat] += 1),
+			[stat]: (prevStat[stat] += addedNumber),
 		}));
 	};
 
@@ -44,6 +46,17 @@ const GameProvider = ({ children }) => {
 			});
 		}, 5000);
 		return () => clearInterval(timer);
+	}, []);
+
+	useEffect(() => {
+		const incomeTimer = setInterval(() => {
+			const addedNumber = new Decimal(9999);
+			setPlayerStats((prevStats) => ({
+				...prevStats,
+				playerIncome: prevStats.playerIncome.plus(addedNumber),
+			}));
+		}, 1000);
+		return () => clearInterval(incomeTimer);
 	}, []);
 
 	return (

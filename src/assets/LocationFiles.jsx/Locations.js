@@ -15,6 +15,7 @@ let locations = {
 	cursedVillage: new Location("Cursed Village", 1, "F"),
 	ancientRuins: new Location("Ancient Ruins", 1, "F"),
 	burningDesert: new Location("Burning Desert", 1, "F"),
+
 	frozenTundra: new Location("Frozen Tundra", 1, "D"),
 	mysteriousCaves: new Location("Mysterious Caves", 3, "D"),
 	enchantedGrove: new Location("Enchanted Grove", 1, "D"),
@@ -65,7 +66,9 @@ let locations = {
 
 	// SSS Rank Locations (Unique)
 	cosmicNexus: new Location("Cosmic Nexus", 1, "SSS", ["CosmicDragon"]),
-	eternalFlame: new Location("Eternal Flame", 1, "SSS", ["infinityPheonix"]),
+	eternalFlameDimension: new Location("Eternal Flame Dimension", 1, "SSS", [
+		"infinityPheonix",
+	]),
 	dimensionalMaelstrom: new Location("Dimensional Maelstrom", 1, "SSS", [
 		"dimensionalLeviathan",
 	]),

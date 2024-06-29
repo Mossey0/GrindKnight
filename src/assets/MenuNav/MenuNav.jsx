@@ -3,7 +3,7 @@ import MenuNavButtons from "./MenuNavButtons";
 
 function MenuNav() {
 	return (
-		<div className="flex flex-wrap justify-around md:w-1/3">
+		<div className="flex flex-wrap justify-around w-1/2 h-auto">
 			<MenuNavButtons
 				name={"Home"}
 				id={"Home"}
