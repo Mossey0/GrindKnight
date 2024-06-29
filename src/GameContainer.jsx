@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import SectionBlocks from "./assets/BuildBlocks/SectionBlocks";
 import MessageBox from "./assets/BuildBlocks/MessageBox";
 import DescriptionBlock from "./assets/BuildBlocks/DescriptionBlock";
-import HungtingGrounds from "./assets/FightSection/HungtingGrounds";
 import { GameContext } from "./GameContext";
 import RecruitSection from "./assets/RecruitFiles/RecruitSection";
+import BattleLocationSection from "./assets/FightSection/BattleLocationSection";
 
 function GameContainer() {
 	const { currentNav } = useContext(GameContext);
@@ -30,7 +30,7 @@ function GameContainer() {
 			{currentNav === "Hunt" && (
 				<>
 					<DescriptionBlock />
-					<HungtingGrounds />
+					<BattleLocationSection />
 					<MessageBox />
 				</>
 			)}

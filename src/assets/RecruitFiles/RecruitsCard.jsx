@@ -1,6 +1,16 @@
 import React from "react";
+import recruits from "./Recruit";
 
-const LocationCard = ({ name, rank, isSelected, onClick }) => {
+const RecruitCard = ({
+	name,
+	rank,
+	health,
+	attack,
+	cost,
+	index,
+	selectRecruit,
+	handleChangeRecruit,
+}) => {
 	const rankColor = (rank) => {
 		return rank === "F"
 			? "bg-blue-100"
@@ -22,21 +32,22 @@ const LocationCard = ({ name, rank, isSelected, onClick }) => {
 											? "bg-purple-600"
 											: "";
 	};
-
 	const colorClass = rankColor(rank);
-	const selected = isSelected ? "border" : "";
+	const selected = selectRecruit === name ? "border-black" : "border-white";
 
 	return (
 		<div
-			className={`flex flex-col gap-2 ${colorClass} hover:bg-opacity-25 p-2 rounded-md md:w-60 cursor-pointer w-1/3 ${selected} border-black`}
-			onClick={onClick}
+			className={`flex flex-col gap-2 ${colorClass} hover:bg-opacity-25 p-2 rounded-md md:w-60 cursor-pointer w-1/3 ${selected} border-2`}
+			onClick={() => handleChangeRecruit(name)}
+			key={index}
 		>
 			<h3 className="mb-2 text-xl">{name}</h3>
-			<p>
-				rank: <span className="text-">{rank}</span>
-			</p>
+			<p>Rank: {rank}</p>
+			<p>Health: {health}</p>
+			<p>Power: {attack}</p>
+			<p>Cost: {cost}</p>
 		</div>
 	);
 };
 
-export default LocationCard;
+export default RecruitCard;
