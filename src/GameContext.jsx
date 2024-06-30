@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import Decimal from "break_infinity.js";
+import { m } from "framer-motion";
 
 const GameContext = createContext();
 
@@ -13,6 +14,53 @@ const GameProvider = ({ children }) => {
 		playerArtifacts: new Decimal(20000),
 		playerEquipment: new Decimal(20000),
 		playerIncome: new Decimal(0),
+	});
+	const [playerArmy, setPlayerArmy] = useState({
+		villager: new Decimal(0),
+		peasant: new Decimal(0),
+		apprentice: new Decimal(0),
+		militaryTrainee: new Decimal(0),
+		footman: new Decimal(0),
+		militia: new Decimal(0),
+		archer: new Decimal(0),
+		pikeman: new Decimal(0),
+		crossboman: new Decimal(0),
+		guardsman: new Decimal(0),
+		knight: new Decimal(0),
+		lancer: new Decimal(0),
+		paladin: new Decimal(0),
+		berserker: new Decimal(0),
+		captain: new Decimal(0),
+		mage: new Decimal(0),
+		templar: new Decimal(0),
+		ranger: new Decimal(0),
+		gladiator: new Decimal(0),
+		summoner: new Decimal(0),
+		warlock: new Decimal(0),
+		barabarian: new Decimal(0),
+		assassin: new Decimal(0),
+		eliteGuardsman: new Decimal(0),
+		battlemage: new Decimal(0),
+		pyromancer: new Decimal(0),
+		rogue: new Decimal(0),
+		druid: new Decimal(0),
+		shaman: new Decimal(0),
+		sorcerer: new Decimal(0),
+		loneMonk: new Decimal(0),
+		necromancer: new Decimal(0),
+		wizard: new Decimal(0),
+		divineWarrior: new Decimal(0),
+		stormCaller: new Decimal(0),
+		crusader: new Decimal(0),
+		shadowBlade: new Decimal(0),
+		drakenKnight: new Decimal(0),
+		dragonSlayer: new Decimal(0),
+		starCaller: new Decimal(0),
+		voidWalker: new Decimal(0),
+		legendaryHero: new Decimal(0),
+		celestialHero: new Decimal(0),
+		avatarOfWar: new Decimal(0),
+		shadowMonarch: new Decimal(0),
 	});
 
 	const changeMessageLog = (intent, message) => {
@@ -65,6 +113,7 @@ const GameProvider = ({ children }) => {
 				playerStats,
 				messageLog,
 				currentNav,
+				playerArmy,
 				changeMessageLog,
 				changeNavigation,
 				changePlayerStats,

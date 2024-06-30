@@ -1,6 +1,12 @@
 import React from "react";
 
-const LocationCard = ({ name, rank, currentMap, handleChangeMap }) => {
+const LocationCard = ({
+	name,
+	rank,
+	currentMap,
+	mapProperties,
+	handleChangeMap,
+}) => {
 	const rankColor = (rank) => {
 		return rank === "F"
 			? "bg-blue-100"
@@ -29,7 +35,7 @@ const LocationCard = ({ name, rank, currentMap, handleChangeMap }) => {
 	return (
 		<div
 			className={`flex flex-col gap-2 ${colorClass} hover:bg-opacity-25 p-2 rounded-md md:w-60 cursor-pointer w-1/3 ${selected} border shadow-inner`}
-			onClick={() => handleChangeMap(name)}
+			onClick={() => handleChangeMap(name, mapProperties)}
 		>
 			<h3 className="mb-2 text-xl">{name}</h3>
 			<p>

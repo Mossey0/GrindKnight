@@ -6,15 +6,6 @@ class Recruit {
 		this.cost = cost;
 		this.rank = rank;
 	}
-	getCost = (number) => {
-		return this.cost * number;
-	};
-	getHealth = (number) => {
-		return this.health * number;
-	};
-	getAttack = (number) => {
-		return this.attack * number;
-	};
 }
 
 const recruits = {
@@ -86,7 +77,7 @@ const recruits = {
 	},
 
 	X: {
-		avatarOfWarfare: new Recruit("Avatar of Warfare", 5000, 3500, 4500, "X"),
+		avatarOfWar: new Recruit("Avatar of Warfare", 5000, 3500, 4500, "X"),
 		shadowMonarch: new Recruit("Shadow Monarch", 5500, 3300, 4800, "X"),
 	},
 };

@@ -1,21 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import locations from "../LocationFiles.jsx/Locations";
 import LocationCard from "../LocationFiles.jsx/HuntingLocationCard";
+import BattleSection from "./BattleSection";
 
 function BattleLocationSection() {
 	const [currentMap, setCurrentMap] = useState(null);
-	const [battleCurrent, setBattleCurrent] = useState("Select");
+	const [battleCurrent, setBattleCurrent] = useState("select");
+	const selectMapData = useRef({});
 
-	const handleChangeMap = (map) => {
+	const handleChangeMap = (map, mapProperties) => {
+		selectMapData.current = [...mapProperties];
 		setCurrentMap(map);
 	};
 
 	return (
-		<div className="relative flex flex-col items-center w-full md:w-3/5 h-96 md:h-full">
-			{battleCurrent && (
+		<div className="relative flex flex-col items-center w-full md:w-3/5 md:h-full">
+			{battleCurrent === "select" && (
 				<>
 					<h1 className="text-2xl">Hunting Grounds</h1>
-					<div className="flex flex-wrap gap-6 pt-10 w-full h-5/6 overflow-y-auto">
+					<div className="flex flex-wrap gap-6 pt-10 w-full md:h-5/6 overflow-y-auto">
 						{Object.entries(locations).map(([rank, locations], index) => (
 							<div
 								className="w-full"
@@ -30,6 +33,11 @@ function BattleLocationSection() {
 												rank={location.rank}
 												currentMap={currentMap}
 												key={index}
+												mapProperties={[
+													location.name,
+													location.size,
+													location.rank,
+												]}
 												handleChangeMap={handleChangeMap}
 											/>
 										);
@@ -40,16 +48,20 @@ function BattleLocationSection() {
 					</div>
 				</>
 			)}
+			{battleCurrent === "battle" && (
+				<BattleSection mapProperties={selectMapData.current} />
+			)}
 			<div className="mt-10">
-				{battleCurrent && (
+				{currentMap !== null && (
 					<button
 						type="button"
 						className=""
+						onClick={() => setBattleCurrent("battle")}
 					>
-						Run
+						Run map
 					</button>
 				)}
-				{battleCurrent && (
+				{battleCurrent === "battle" && (
 					<button
 						type="button"
 						className=""
