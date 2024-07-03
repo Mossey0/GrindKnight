@@ -17,19 +17,19 @@ const buildings = {
 	scribesScriptorium: new Building("Scribe's Scriptorium", 0, ""),
 	potionFactory: new Building("Potion Factory", 0, ""),
 	necromancersCrypt: new Building("Necromancer's Crypt", 0, ""),
-	elementalistsSanctuary: new Building("Elementalist's Sanctuary", 0, ""),
-	transmutersFoundry: new Building("Transmuter's Foundry", 0, ""),
+	elementalSanctuary: new Building("Elemental Sanctuary", 0, ""),
+	transmuterFoundry: new Building("Transmuter Foundry", 0, ""),
 	moonlightVineyard: new Building("Moonlight Vineyard", 0, ""),
 	pixieDustFarm: new Building("Pixie Dust Farm", 0, ""),
 	magicalMushroomGrove: new Building("Magical Mushroom Grove", 0, ""),
 	celestialHerbGarden: new Building("Celestial Herb Garden", 0, ""),
 	frostFlowerPlantation: new Building("Frost Flower Plantation", 0, ""),
 	mysticMarketplace: new Building("Mystic Marketplace", 0, ""),
-	dwarvenTradePost: new Building("Dwarven Trade Post", 0, ""),
-	elvenArtisanMarket: new Building("Elven Artisan Market", 0, ""),
+	dwarfTradePost: new Building("Dwarf Trade Post", 0, ""),
+	ArtisanMarket: new Building("Artisan Market", 0, ""),
 	wizardsArcaneLibrary: new Building("Wizard's Arcane Library", 0, ""),
 	paladinsTrainingGrounds: new Building("Paladin's Training Grounds", 0, ""),
-	beastmastersMenagerie: new Building("Beastmaster's Menagerie", 0, ""),
+	beastMenagerie: new Building("Beast Menagerie", 0, ""),
 	healersSanctuary: new Building("Healer's Sanctuary", 0, ""),
 
 	// Magical Establishments
@@ -47,8 +47,8 @@ const buildings = {
 	fairyRingCasino: new Building("Fairy Ring Casino", 0, ""),
 	krakensTentacleArena: new Building("Kraken's Tentacle Arena", 0, ""),
 	mysticMazeGardens: new Building("Mystic Maze Gardens", 0, ""),
-	shapeshiftersMasqueradeBall: new Building(
-		"Shapeshifter's Masquerade Ball",
+	shapeshifterMasqueradeBall: new Building(
+		"Shapeshifter Masquerade Ball",
 		0,
 		""
 	),

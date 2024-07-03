@@ -5,7 +5,7 @@ import BattleSection from "./BattleSection";
 
 function BattleLocationSection() {
 	const [currentMap, setCurrentMap] = useState(null);
-	const [battleCurrent, setBattleCurrent] = useState("select");
+	const [battleCurrent, setBattleCurrent] = useState("battle");
 	const selectMapData = useRef({});
 
 	const handleChangeMap = (map, mapProperties) => {
@@ -14,7 +14,7 @@ function BattleLocationSection() {
 	};
 
 	return (
-		<div className="relative flex flex-col items-center w-full md:w-3/5 md:h-full">
+		<div className="relative flex flex-col items-center w-full md:w-3/5 h-96 md:h-full">
 			{battleCurrent === "select" && (
 				<>
 					<h1 className="text-2xl">Hunting Grounds</h1>

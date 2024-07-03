@@ -43,7 +43,7 @@ const recruits = {
 		barbarian: new Recruit("Barbarian", 180, 150, 140, "B"),
 		assassin: new Recruit("Assassin", 90, 190, 150, "B"),
 		eliteGuardsman: new Recruit("Elite Guardsman", 200, 130, 160, "B"),
-		battlemage: new Recruit("Battlemage", 130, 180, 170, "B"),
+		battleMage: new Recruit("Battlemage", 130, 180, 170, "B"),
 		pyromancer: new Recruit("Pyromancer", 120, 200, 180, "B"),
 	},
 
@@ -59,9 +59,9 @@ const recruits = {
 	S: {
 		wizard: new Recruit("Wizard", 700, 850, 600, "S"),
 		divineWarrior: new Recruit("Divine Warrior", 900, 750, 650, "S"),
-		stormcaller: new Recruit("Stormcaller", 650, 950, 700, "S"),
+		stormCaller: new Recruit("Storm Caller", 650, 950, 700, "S"),
 		crusader: new Recruit("Crusader", 950, 780, 750, "S"),
-		shadowblade: new Recruit("Shadowblade", 600, 1000, 800, "S"),
+		shadowBlade: new Recruit("Shadow Blade", 600, 1000, 800, "S"),
 		drakeKnight: new Recruit("Drake Knight", 1000, 820, 850, "S"),
 	},
 
