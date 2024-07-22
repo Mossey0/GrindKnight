@@ -1,15 +1,16 @@
 import React from "react";
-import recruits from "./Recruit";
 
 const RecruitCard = ({
+	nameId,
 	name,
+	stats,
 	rank,
 	health,
 	attack,
 	cost,
 	index,
 	selectRecruit,
-	handleChangeRecruit,
+	handleSelectRecruit,
 }) => {
 	const rankColor = (rank) => {
 		return rank === "F"
@@ -33,13 +34,15 @@ const RecruitCard = ({
 											: "";
 	};
 	const colorClass = rankColor(rank);
-	const selected = selectRecruit === name ? "border-black" : "border-white";
+	const selected = selectRecruit === nameId ? "border-black" : "border-white";
+
+	const stat = { ...stats };
 
 	return (
 		<div
 			className={`flex flex-col gap-2 ${colorClass} hover:bg-opacity-25 p-2 rounded-md md:w-60 cursor-pointer w-1/3 ${selected} border-2`}
-			onClick={() => handleChangeRecruit(name)}
-			key={index}
+			key={nameId}
+			onClick={() => handleSelectRecruit(nameId, stat)}
 		>
 			<h3 className="mb-2 text-xl">{name}</h3>
 			<p>Rank: {rank}</p>

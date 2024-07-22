@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import GameContainer from "./GameContainer";
 import MenuNav from "./assets/MenuNav/MenuNav";
 import Stats from "./assets/BuildBlocks/Stats";
@@ -7,7 +6,7 @@ import Stats from "./assets/BuildBlocks/Stats";
 function Game() {
 	return (
 		<div
-			className="md:w-screen md:h-screen"
+			className="flex flex-col bg-slate-800 md:w-screen md:h-screen overflow-x-auto"
 			id="game-window"
 		>
 			<div className="flex justify-between items-center bg-gray-700 p-2 md:w-full md:h-12 text-white">

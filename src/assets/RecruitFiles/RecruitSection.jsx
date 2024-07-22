@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import RecruitCard from "./RecruitsCard";
 import recruits from "./Recruit";
+import { GameContext } from "../../GameContext";
+import Decimal from "break_infinity.js";
 
 function RecruitSection() {
 	const [selectRecruit, setSelectRecruit] = useState(null);
-
-	const handleChangeRecruit = (recruit) => {
+	const [selectAmount, setSelectAmount] = useState(1);
+	const recruitStats = useRef(null);
+	const { handleAddToArmy, playerStats, changePlayerStats } =
+		useContext(GameContext);
+	const handleSelectRecruit = (recruit, stats) => {
 		setSelectRecruit(recruit);
+		recruitStats.current = { ...stats };
+	};
+
+	const handleBuyRecruit = (recruitStats) => {
+		if (playerStats.playerIncome.gt(recruitStats.cost)) {
+			const cost = -recruitStats.cost;
+			changePlayerStats("playerIncome", cost);
+			handleAddToArmy(
+				recruitStats.name,
+				1,
+				recruitStats.name,
+				recruitStats.health,
+				recruitStats.attack
+			);
+		}
 	};
 
 	return (
@@ -23,6 +43,8 @@ function RecruitSection() {
 							{Object.entries(recruits).map(([name, recruit], index) => {
 								return (
 									<RecruitCard
+										nameId={name}
+										stats={recruit}
 										name={recruit.name}
 										rank={recruit.rank}
 										health={recruit.health}
@@ -30,7 +52,7 @@ function RecruitSection() {
 										cost={recruit.cost}
 										key={index}
 										selectRecruit={selectRecruit}
-										handleChangeRecruit={handleChangeRecruit}
+										handleSelectRecruit={handleSelectRecruit}
 									/>
 								);
 							})}
@@ -42,8 +64,9 @@ function RecruitSection() {
 				<button
 					type="button"
 					className=""
+					onClick={() => handleBuyRecruit(recruitStats.current)}
 				>
-					Recuit now
+					Recruit now
 				</button>
 			</div>
 		</div>

@@ -2,15 +2,25 @@ import React, { useContext, useRef, useState } from "react";
 import locations from "../LocationFiles.jsx/Locations";
 import LocationCard from "../LocationFiles.jsx/HuntingLocationCard";
 import BattleSection from "./BattleSection";
+import { GameContext } from "../../GameContext";
 
 function BattleLocationSection() {
+	const { generateMonsterComposition } = useContext(GameContext);
 	const [currentMap, setCurrentMap] = useState(null);
-	const [battleCurrent, setBattleCurrent] = useState("battle");
+	const [battleCurrent, setBattleCurrent] = useState("select");
 	const selectMapData = useRef({});
 
 	const handleChangeMap = (map, mapProperties) => {
 		selectMapData.current = [...mapProperties];
 		setCurrentMap(map);
+	};
+
+	const handleBattleChange = (mapRank, mapSize) => {
+		setBattleCurrent("battle");
+		generateMonsterComposition(
+			selectMapData.current[1],
+			selectMapData.current[2]
+		);
 	};
 
 	return (
@@ -35,8 +45,8 @@ function BattleLocationSection() {
 												key={index}
 												mapProperties={[
 													location.name,
-													location.size,
 													location.rank,
+													location.size,
 												]}
 												handleChangeMap={handleChangeMap}
 											/>
@@ -56,7 +66,7 @@ function BattleLocationSection() {
 					<button
 						type="button"
 						className=""
-						onClick={() => setBattleCurrent("battle")}
+						onClick={() => handleBattleChange()}
 					>
 						Run map
 					</button>
