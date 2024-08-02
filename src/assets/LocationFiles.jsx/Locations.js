@@ -1,20 +1,21 @@
 class Location {
-	constructor(name, size, rank) {
+	constructor(name, size, rank, danger) {
 		this.name = name;
 		this.rank = rank;
 		this.size = size;
+		this.danger = danger;
 	}
 }
 
 let locations = {
 	F: {
-		darkForest: new Location("Dark Forest", 1, "F"),
-		abandonedMine: new Location("Abandoned Mine", 1, "F"),
 		hauntedGraveyard: new Location("Haunted Graveyard", 1, "F"),
+		grassyMeadows: new Location("Grassy Meadows", 3, "F"),
 		murkySwamp: new Location("Murky Swamp", 2, "F"),
-		cursedVillage: new Location("Cursed Village", 2, "F"),
+		abandonedMine: new Location("Abandoned Mine", 1, "F"),
+		darkForest: new Location("Dark Forest", 1, "F"),
 		ancientRuins: new Location("Ancient Ruins", 2, "F"),
-		burningDesert: new Location("Burning Desert", 3, "F"),
+		cursedVillage: new Location("Cursed Village", 2, "F"),
 	},
 
 	D: {
@@ -89,7 +90,12 @@ let locations = {
 	},
 
 	XX: {
-		creationCore: new Location("Creation Core", 70, "XX", ["supremeCreator"]),
+		realmOfTheArchitect: new Location(
+			"Realm of the  Supreme Creator",
+			70,
+			"XX",
+			["supremeCreator"]
+		),
 	},
 };
 export default locations;

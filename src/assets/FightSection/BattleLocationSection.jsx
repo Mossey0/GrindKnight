@@ -3,82 +3,91 @@ import locations from "../LocationFiles.jsx/Locations";
 import LocationCard from "../LocationFiles.jsx/HuntingLocationCard";
 import BattleSection from "./BattleSection";
 import { GameContext } from "../../GameContext";
+import { Radius, Skull } from "lucide-react";
+
+const locationRanks = Object.keys(locations);
 
 function BattleLocationSection() {
 	const { generateMonsterComposition } = useContext(GameContext);
-	const [currentMap, setCurrentMap] = useState(null);
 	const [battleCurrent, setBattleCurrent] = useState("select");
-	const selectMapData = useRef({});
+	const [selectTab, setSelectTab] = useState("F");
 
-	const handleChangeMap = (map, mapProperties) => {
-		selectMapData.current = [...mapProperties];
-		setCurrentMap(map);
+	const dangerLevel = (size) => {
+		return size <= 3
+			? "text-green-200"
+			: size <= 6
+				? "text-yellow-200"
+				: size <= 12
+					? "text-orange-200"
+					: size <= 20
+						? "text-black"
+						: "text-black";
 	};
 
-	const handleBattleChange = (mapRank, mapSize) => {
-		setBattleCurrent("battle");
-		generateMonsterComposition(
-			selectMapData.current[1],
-			selectMapData.current[2]
-		);
+	const handleTabSelect = (tab) => {
+		setSelectTab(tab);
+	};
+
+	const locationTab = () => {
+		return locationRanks.map((rank) => {
+			return (
+				<button
+					key={rank}
+					className={`px-4 py-2 font-semibold rounded-t-lg ${
+						selectTab === rank ? "bg-blue-600" : "bg-slate-400"
+					}`}
+					onClick={() => handleTabSelect(rank)}
+				>
+					{rank} Rank
+				</button>
+			);
+		});
+	};
+
+	const locationCard = () => {
+		return Object.values(locations[selectTab]).map((map) => (
+			<div
+				className="bg-blue-800 hover:opacity-80 p-4 *:pr-4 *:pl-4 rounded cursor-pointer"
+				key={map.name}
+			>
+				<h1>{map.name}</h1>
+				<div className="flex gap-2 text-center">
+					<div className="flex items-center">
+						<Radius
+							size={16}
+							className={`${dangerLevel(map.size)}`}
+						/>
+						<span>{map.size}</span>
+					</div>
+					{Array.from({ length: map.size }, (_, index) => {
+						return <Skull size={16} />;
+					}).map((a) => a)}
+					<div className="flex items-center"></div>
+				</div>
+			</div>
+		));
 	};
 
 	return (
-		<div className="relative flex flex-col items-center w-full md:w-3/5 h-96 md:h-full">
-			{battleCurrent === "select" && (
-				<>
-					<h1 className="text-2xl">Hunting Grounds</h1>
-					<div className="flex flex-wrap gap-6 pt-10 w-full md:h-5/6 overflow-y-auto">
-						{Object.entries(locations).map(([rank, locations], index) => (
-							<div
-								className="w-full"
-								key={index}
-							>
-								<h1 className="text-2xl">{rank}</h1>
-								<div className="flex flex-wrap gap-2 w-full">
-									{Object.entries(locations).map(([name, location], index) => {
-										return (
-											<LocationCard
-												name={location.name}
-												rank={location.rank}
-												currentMap={currentMap}
-												key={index}
-												mapProperties={[
-													location.name,
-													location.rank,
-													location.size,
-												]}
-												handleChangeMap={handleChangeMap}
-											/>
-										);
-									})}
-								</div>
-							</div>
-						))}
+		<div className="p-2 w-full h-full">
+			<h1 className="flex text-4xl">Battle</h1>
+			<div className="flex flex-col gap-5 h-5/6">
+				<div className="flex flex-wrap space-x-1 w-2/3 lg:w-full overflow-y-auto">
+					{locationTab()}
+				</div>
+				<div className="flex flex-col gap-4 *:w-2/3 h-96 overflow-y-auto">
+					{locationCard()}
+				</div>
+				<div className="">
+					<div className="flex gap-2">
+						<button
+							type="input"
+							className=""
+						>
+							Recruit now
+						</button>
 					</div>
-				</>
-			)}
-			{battleCurrent === "battle" && (
-				<BattleSection mapProperties={selectMapData.current} />
-			)}
-			<div className="mt-10">
-				{currentMap !== null && (
-					<button
-						type="button"
-						className=""
-						onClick={() => handleBattleChange()}
-					>
-						Run map
-					</button>
-				)}
-				{battleCurrent === "battle" && (
-					<button
-						type="button"
-						className=""
-					>
-						Run
-					</button>
-				)}
+				</div>
 			</div>
 		</div>
 	);

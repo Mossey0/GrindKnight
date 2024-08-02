@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import SectionBlocks from "./assets/BuildBlocks/SectionBlocks";
-import MessageBox from "./assets/BuildBlocks/MessageBox";
 import DescriptionBlock from "./assets/BuildBlocks/DescriptionBlock";
 import { GameContext } from "./GameContext";
 import RecruitSection from "./assets/RecruitFiles/RecruitSection";
@@ -10,28 +9,31 @@ function GameContainer() {
 	const { currentNav } = useContext(GameContext);
 	return (
 		<div
-			className="flex flex-col flex-wrap gap-5 md:gap-0 w-full h-4/5 md:h-11/12"
+			className="flex pt-5 h-4/5"
 			id="game-container"
 		>
 			{currentNav === "Home" && (
 				<>
-					<DescriptionBlock />
-					<SectionBlocks id={1} />
-					<MessageBox />
+					<div className="flex flex-wrap w-full h-5/6">
+						<DescriptionBlock textContent={1} />
+						<SectionBlocks />
+					</div>
 				</>
 			)}
 			{currentNav === "Recruit" && (
 				<>
-					<DescriptionBlock />
-					<RecruitSection />
-					<MessageBox />
+					<div className="flex flex-wrap w-full">
+						<DescriptionBlock textContent={1} />
+						<SectionBlocks component={RecruitSection} />
+					</div>
 				</>
 			)}
 			{currentNav === "Hunt" && (
 				<>
-					<DescriptionBlock />
-					<BattleLocationSection />
-					<MessageBox />
+					<div className="flex flex-wrap w-full h-5/6">
+						<DescriptionBlock textContent={1} />
+						<SectionBlocks component={BattleLocationSection} />
+					</div>
 				</>
 			)}
 		</div>

@@ -2,6 +2,8 @@ import React, { createContext, useEffect, useState } from "react";
 import Decimal from "break_infinity.js";
 import Monsters from "./assets/MonsterFiles/Monsters";
 import { produce } from "immer";
+import BuildingData from "./assets/Building/BuildingData";
+import buildings from "./assets/Building/BuildingData";
 
 const GameContext = createContext();
 
@@ -16,36 +18,101 @@ const GameProvider = ({ children }) => {
 
 	const changePlayerStats = (stat, change) => {
 		const addedNumber = new Decimal(change);
-		setPlayerStats((prevStat) => ({
-			...prevStat,
-			[stat]: prevStat[stat].plus(addedNumber),
-		}));
+		const changedStat = produce(playerStats, (statDraft) => {
+			statDraft[stat] = statDraft[stat].plus(addedNumber);
+		});
+		setPlayerStats(changedStat);
 	};
 
 	const handleAddToArmy = (id, countChange, name, health, attack) => {
-		setPlayerArmy((prevArmy) => {
-			if (!prevArmy.hasOwnProperty(id)) {
-				return {
-					...prevArmy,
-					[id]: {
-						name: name,
+		setPlayerArmy(
+			produce((draft) => {
+				if (!draft[id]) {
+					draft[id] = {
+						name,
 						health: new Decimal(health),
 						currentHealth: new Decimal(health),
 						attack: new Decimal(attack),
-						count: new Decimal(0).plus(new Decimal(countChange)),
-					},
-				};
-			} else {
-				return {
-					...prevArmy,
-					[id]: {
-						...prevArmy[id],
-						count: prevArmy[id].count.plus(new Decimal(countChange)),
-					},
-				};
-			}
-		});
+						count: new Decimal(countChange),
+					};
+				} else {
+					draft[id].count = draft[id].count.plus(new Decimal(countChange));
+				}
+			})
+		);
 	};
+
+	// Player Building Logic
+	const TIER_COMPLETION = new Decimal(1.5);
+	const [playerBuildings, setPlayerBuildings] = useState(BuildingData);
+
+	const isTierComplete = (tier) => {
+		return Object.values(tier).every((building) => building.count.gt(0));
+	};
+
+	const addBuilding = (tier, buildingName, amount) => {
+		const DAmount = new Decimal(amount);
+		setPlayerBuildings(
+			produce((draft) => {
+				draft[tier][buildingName].count =
+					draft[tier][buildingName].count.plus(amount);
+			})
+		);
+	};
+
+	const upgradeBuilding = (tier, buildingName) => {
+		setPlayerBuildings(
+			produce((draft) => {
+				draft[tier][buildingName].level =
+					draft[tier][buildingName].level.plus(1);
+			})
+		);
+	};
+
+	const totalBuildingIncome = () => {
+		return Object.values(playerBuildings).reduce((totalIncome, tier) => {
+			let incomeForTier = Object.values(tier).reduce((tierIncome, building) => {
+				return tierIncome.plus(building.calculateIncome());
+			}, new Decimal(0));
+
+			incomeForTier = isTierComplete(tier)
+				? incomeForTier.times(TIER_COMPLETION)
+				: incomeForTier;
+
+			return totalIncome.plus(incomeForTier);
+		}, new Decimal(0));
+	};
+
+	// Big Number Logic
+	const abbreviations = [
+		"",
+		"K",
+		"M",
+		"B",
+		"T",
+		"Qa",
+		"Qi",
+		"Sx",
+		"Sp",
+		"Oc",
+		"No",
+	];
+
+	function formatLargeNumber(number) {
+		const num = new Decimal(number);
+
+		if (num.lt(1000)) {
+			return num.toFixed(0);
+		}
+
+		const magnitude = Math.min(
+			Math.floor(num.log10() / 3),
+			abbreviations.length - 1
+		);
+		const scaled = num.div(Decimal.pow(1000, magnitude));
+
+		return scaled.toFixed(0) + abbreviations[magnitude];
+	}
 
 	// Monster logic
 	const [monsterComposition, setMonsterComposition] = useState({});
@@ -109,6 +176,7 @@ const GameProvider = ({ children }) => {
 			// Continue to apply damage until unit is dead or damage turns to 0
 			while (draft.count.gt(0) && totalUnitAttack.gt(0)) {
 				const minDamage = Decimal.min(totalUnitAttack, draft.currentHealth);
+
 				//Apply Damage
 				draft.currentHealth = draft.currentHealth.minus(minDamage);
 				totalUnitAttack = totalUnitAttack.minus(minDamage);
@@ -181,39 +249,36 @@ const GameProvider = ({ children }) => {
 
 	// Message Box logic
 	const [messageLog, setMessageLog] = useState([]);
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setMessageLog((prevLog) => {
-				if (prevLog.length > 0) {
-					return [...prevLog.slice(0, -1)];
-				}
-				return prevLog;
-			});
-		}, 5000);
-		return () => clearInterval(timer);
-	}, []);
 
-	const changeMessageLog = (message) => {
-		const addedMessage = produce(messageLog, (messageDraft) => {
-			const box = {
+	const addNewMessage = (message) => {
+		setMessageLog((prevLog) => [
+			{
 				id: Date.now(),
 				text: message,
-			};
-
-			messageDraft.unShift(box);
-		});
-
-		setMessageLog(addedMessage);
+			},
+			...prevLog,
+		]);
 	};
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setMessageLog((prevLog) =>
+				prevLog.length > 0 ? prevLog.slice(0, -1) : prevLog
+			);
+		}, 5000);
+
+		return () => clearInterval(timer);
+	}, []);
 
 	// Income interval
 	useEffect(() => {
 		const incomeTimer = setInterval(() => {
 			const addedNumber = new Decimal(10000);
-			setPlayerStats((prevStats) => ({
-				...prevStats,
-				playerIncome: prevStats.playerIncome.plus(addedNumber),
-			}));
+			setPlayerStats(
+				produce((draft) => {
+					draft.playerIncome = draft.playerIncome.plus(addedNumber);
+				})
+			);
 		}, 5000);
 		return () => clearInterval(incomeTimer);
 	}, []);
@@ -223,6 +288,7 @@ const GameProvider = ({ children }) => {
 			value={{
 				playerArmy,
 				playerStats,
+				formatLargeNumber,
 				monsterComposition,
 				generateMonsterComposition,
 				handleAddToArmy,
@@ -230,8 +296,8 @@ const GameProvider = ({ children }) => {
 				updateMonsterComposition,
 				processTurn,
 				messageLog,
+				addNewMessage,
 				currentNav,
-				changeMessageLog,
 				changeNavigation,
 				changePlayerStats,
 			}}
