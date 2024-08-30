@@ -9,8 +9,8 @@ function MenuNav() {
 				id={"Home"}
 			/>
 			<MenuNavButtons
-				name={"Hunt"}
-				id={"Hunt"}
+				name={"Battle"}
+				id={"Battle"}
 			/>
 			<MenuNavButtons
 				name={"Recruit"}

@@ -1,23 +1,45 @@
 import Decimal from "break_infinity.js";
 
 class Building {
-	constructor(name, income, tier) {
+	constructor(name, income, tier, cost) {
 		this.name = name;
 		this.income = new Decimal(income);
 		this.tier = tier;
-		this.cost = cost;
+		this.cost = new Decimal(cost);
 		this.count = new Decimal(0);
 		this.level = new Decimal(1);
+		this.costIncrease = new Decimal(1.5);
+		this.upgradeCostIncreased = new Decimal(1.3);
+		this.upgradeCost = new Decimal(2);
 	}
 	calculateIncome() {
 		let efficiency = Decimal.max(
 			new Decimal(0.5),
 			new Decimal(1).minus(this.count.minus(1).times(0.1))
 		);
-		return this.baseIncome
-			.times(this.count)
-			.times(efficiency)
-			.times(this.level);
+		return this.income.times(this.count).times(efficiency).times(this.level);
+	}
+	calculateCost(amountPurchased) {
+		const increaseInCost = this.costIncrease;
+		const amount = new Decimal(amountPurchased);
+		const currentCount = this.count;
+
+		return this.cost.times(
+			increaseInCost
+				.pow(currentCount)
+				.times(increaseInCost.pow(amount).minus(1))
+				.div(increaseInCost)
+				.minus(1)
+		);
+	}
+	calculateUpgradeCost(amountPurchased) {
+		const amount = new Decimal(amountPurchased);
+		return this.upgradeCost.times(
+			this.upgradeCostIncreased
+				.pow(this.level.minus(1))
+				.times(this.upgradeCostIncreased.pow(amount))
+				.div(this.upgradeCostIncreased.minus(1))
+		);
 	}
 }
 

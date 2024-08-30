@@ -1,21 +1,21 @@
 class Location {
-	constructor(name, size, rank, danger) {
+	constructor(name, size, rank, boss) {
 		this.name = name;
-		this.rank = rank;
 		this.size = size;
-		this.danger = danger;
+		this.rank = rank;
+		this.boss = boss;
 	}
 }
 
 let locations = {
 	F: {
 		hauntedGraveyard: new Location("Haunted Graveyard", 1, "F"),
-		grassyMeadows: new Location("Grassy Meadows", 3, "F"),
-		murkySwamp: new Location("Murky Swamp", 2, "F"),
-		abandonedMine: new Location("Abandoned Mine", 1, "F"),
-		darkForest: new Location("Dark Forest", 1, "F"),
-		ancientRuins: new Location("Ancient Ruins", 2, "F"),
+		grassyMeadows: new Location("Grassy Meadows", 1, "F"),
 		cursedVillage: new Location("Cursed Village", 2, "F"),
+		darkForest: new Location("Dark Forest", 2, "F"),
+		ancientRuins: new Location("Ancient Ruins", 2, "F"),
+		abandonedMine: new Location("Abandoned Mine", 3, "F"),
+		murkySwamp: new Location("Murky Swamp", 3, "F"),
 	},
 
 	D: {

@@ -1,9 +1,10 @@
 class Recruit {
-	constructor(name, health, attack, cost, rank) {
+	constructor(name, health, attack, cost, count, rank) {
 		this.name = name;
 		this.health = health;
 		this.attack = attack;
 		this.cost = cost;
+		this.count = count;
 		this.rank = rank;
 	}
 }

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { GameContext } from "../../GameContext";
-import { ArrowUpCircle } from "lucide-react";
 
 function Stats() {
 	const { playerStats, formatLargeNumber } = useContext(GameContext);
@@ -10,9 +9,7 @@ function Stats() {
 			<div>Soldiers: {1}</div>
 			<div>Artifacts: {1}</div>
 			<div>Equipment: {1}</div>
-			<div>
-				Income: {formatLargeNumber(playerStats.playerIncome.toString())}
-			</div>
+			<div>Gold: {formatLargeNumber(playerStats.playerGold.toString())}</div>
 		</div>
 	);
 }

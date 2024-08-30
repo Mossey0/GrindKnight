@@ -1,42 +1,66 @@
 import React, { useContext } from "react";
-import SectionBlocks from "./assets/BuildBlocks/SectionBlocks";
 import DescriptionBlock from "./assets/BuildBlocks/DescriptionBlock";
 import { GameContext } from "./GameContext";
 import RecruitSection from "./assets/RecruitFiles/RecruitSection";
 import BattleLocationSection from "./assets/FightSection/BattleLocationSection";
+import ActionScreen from "./assets/BuildBlocks/ActionScreen";
+import RecruitTitle from "./assets/RecruitFiles/RecruitTitle";
+import HomeTitle from "./assets/Home/HomeTitle";
+import Home from "./assets/Home/Home";
+import BattleTitle from "./assets/FightSection/BattleTitle";
 
 function GameContainer() {
 	const { currentNav } = useContext(GameContext);
 	return (
-		<div
-			className="flex pt-5 h-4/5"
-			id="game-container"
-		>
+		<>
 			{currentNav === "Home" && (
 				<>
-					<div className="flex flex-wrap w-full h-5/6">
-						<DescriptionBlock textContent={1} />
-						<SectionBlocks />
-					</div>
+					<DescriptionBlock />
+					<ActionScreen
+						Title={HomeTitle}
+						Component={Home}
+					/>
+				</>
+			)}
+			{currentNav === "Battle" && (
+				<>
+					<DescriptionBlock />
+					<ActionScreen
+						Title={BattleTitle}
+						Component={BattleLocationSection}
+					/>
 				</>
 			)}
 			{currentNav === "Recruit" && (
 				<>
-					<div className="flex flex-wrap w-full">
-						<DescriptionBlock textContent={1} />
-						<SectionBlocks component={RecruitSection} />
-					</div>
+					<DescriptionBlock />
+					<ActionScreen
+						Title={RecruitTitle}
+						Component={RecruitSection}
+					/>
 				</>
 			)}
-			{currentNav === "Hunt" && (
+			{currentNav === "Upgrade" && (
 				<>
-					<div className="flex flex-wrap w-full h-5/6">
-						<DescriptionBlock textContent={1} />
-						<SectionBlocks component={BattleLocationSection} />
-					</div>
+					<DescriptionBlock />
 				</>
 			)}
-		</div>
+			{currentNav === "Build" && (
+				<>
+					<DescriptionBlock />
+				</>
+			)}
+			{currentNav === "Explore" && (
+				<>
+					<DescriptionBlock />
+				</>
+			)}
+			{currentNav === "Dungeon" && (
+				<>
+					<DescriptionBlock />
+				</>
+			)}
+		</>
 	);
 }
 

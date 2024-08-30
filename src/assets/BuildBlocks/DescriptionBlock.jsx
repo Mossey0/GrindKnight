@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GameContext } from "../../GameContext";
 
-function DescriptionBlock({ textContent }) {
+function DescriptionBlock() {
+	const { itemText, descriptionText, currentNav } = useContext(GameContext);
 	return (
-		<div className="w-full lg:w-2/6 h-1/5 lg:h-full">
-			<h1>Description</h1>
-			<div>{textContent}</div>
+		<div className="overflow-auto">
+			<h1>{currentNav}</h1>
+			<p></p>
+			<p></p>
 		</div>
 	);
 }

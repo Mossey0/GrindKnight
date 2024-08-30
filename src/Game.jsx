@@ -7,19 +7,24 @@ import MessageBox from "./assets/MessageBox/MessageBox";
 function Game() {
 	return (
 		<div
-			className="flex flex-col bg-blue-950 w-full h-screen text-white"
+			className="flex flex-col flex-wrap bg-black w-full min-h-dvh text-white"
 			id="game-window"
 		>
-			<div className="flex justify-between items-center bg-gray-900 p-2">
-				<span
-					className="font-bold font-mono text-2xl text-yellow-500"
-					id="game-name"
-				>
-					GrindKnight
-				</span>
+			<div className="flex justify-between items-center bg-black lg:h-12">
+				<div className="flex justify-between">
+					<span
+						className="font-bold font-mono text-2xl text-yellow-500"
+						id="game-name"
+					>
+						GrindKnight
+					</span>
+				</div>
 				<MenuNav />
 			</div>
-			<GameContainer />
+			<Stats />
+			<div className="lg:flex *:p-4 lg:*:w-1/2 h-5/6 *:h-80 lg:*:h-[800px]">
+				<GameContainer />
+			</div>
 			<MessageBox />
 		</div>
 	);

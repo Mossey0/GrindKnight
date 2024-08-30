@@ -3,7 +3,6 @@ import Decimal from "break_infinity.js";
 import Monsters from "./assets/MonsterFiles/Monsters";
 import { produce } from "immer";
 import BuildingData from "./assets/Building/BuildingData";
-import buildings from "./assets/Building/BuildingData";
 
 const GameContext = createContext();
 
@@ -13,7 +12,8 @@ const GameProvider = ({ children }) => {
 	const [playerStats, setPlayerStats] = useState({
 		playerArtifacts: new Decimal(20000),
 		playerEquipment: new Decimal(20000),
-		playerIncome: new Decimal(10000),
+		playerGold: new Decimal(10000),
+		playerArmyDeaths: new Decimal(0),
 	});
 
 	const changePlayerStats = (stat, change) => {
@@ -52,21 +52,38 @@ const GameProvider = ({ children }) => {
 
 	const addBuilding = (tier, buildingName, amount) => {
 		const DAmount = new Decimal(amount);
-		setPlayerBuildings(
-			produce((draft) => {
-				draft[tier][buildingName].count =
-					draft[tier][buildingName].count.plus(amount);
-			})
-		);
+		const cost = playerBuildings[tier][buildingName].calculateCost(DAmount);
+		if (playerGold.gte(cost)) {
+			setPlayerBuildings(
+				produce((draft) => {
+					draft[tier][buildingName].count =
+						draft[tier][buildingName].count.plus(DAmount);
+				})
+			);
+			setPlayerStats(
+				produce((draft) => {
+					draft.playerGold = draft.playerGold.minus(cost);
+				})
+			);
+			addNewMessage(
+				`${amount} ${playerBuildings[tier][buildingName].name} built`
+			);
+		} else {
+			addNewMessage("Cannot afford");
+		}
 	};
 
 	const upgradeBuilding = (tier, buildingName) => {
-		setPlayerBuildings(
-			produce((draft) => {
-				draft[tier][buildingName].level =
-					draft[tier][buildingName].level.plus(1);
-			})
-		);
+		if (playerGold >= playerBuildings[tier][buildingName]) {
+			setPlayerBuildings(
+				produce((draft) => {
+					draft[tier][buildingName].level =
+						draft[tier][buildingName].level.plus(1);
+				})
+			);
+		} else {
+			addNewMessage("Not enough gold");
+		}
 	};
 
 	const totalBuildingIncome = () => {
@@ -114,10 +131,23 @@ const GameProvider = ({ children }) => {
 		return scaled.toFixed(0) + abbreviations[magnitude];
 	}
 
+	// Map logic
+
+	const [currentMapSelected, setCurrentMapSelected] = useState({});
+
+	const handleMapChange = (mapObject) => {
+		setCurrentMapSelected({
+			mapName: mapObject.name,
+			mapRank: mapObject.rank,
+			mapSize: mapObject.size,
+		});
+	};
+
 	// Monster logic
 	const [monsterComposition, setMonsterComposition] = useState({});
 
-	const generateMonsterComposition = (mapRank, mapSize) => {
+	const generateMonsterComposition = (mapRank, mapSize, mapBoss) => {
+		console.log(mapRank, mapSize);
 		const ranks = ["F", "D", "C", "B", "A", "S", "SS", "SSS", "X", "XX"];
 		const mapRankIndex = ranks.indexOf(mapRank);
 		setMonsterComposition((prevComp) => {
@@ -130,6 +160,7 @@ const GameProvider = ({ children }) => {
 
 				// Calculate the number of monsters per rank (boss rank only 1-2)
 				let numbMonsters;
+
 				if (i === mapRankIndex) {
 					numbMonsters = Math.floor(Math.random() * 2 + 1);
 				} else {
@@ -168,6 +199,79 @@ const GameProvider = ({ children }) => {
 	};
 
 	// Battle Logic
+	const [startBattle, setStartBattle] = useState(false);
+	const [inBattle, setInBattle] = useState(false);
+	const [battleMenu, setBattleMenu] = useState(false);
+
+	const handleBattleMenu = () => {
+		setBattleMenu(!battleMenu);
+	};
+	const updatePlayerArmy = (newArmy) => {
+		setPlayerArmy(newArmy);
+	};
+
+	const updateMonsterComposition = (newComposition) => {
+		setMonsterComposition(newComposition);
+	};
+
+	const handleInBattle = () => {
+		setInBattle(!inBattle);
+	};
+
+	const processTurn = () => {
+		// Create Draft of both armies
+		return produce({ playerArmy, monsterComposition }, (draft) => {
+			// Grab current living units
+			const playerAliveUnits = Object.keys(draft.playerArmy).filter((key) => {
+				return draft.playerArmy[key].count.gt(0);
+			});
+
+			const monsterAliveUnits = Object.keys(draft.monsterComposition).filter(
+				(key) => {
+					return draft.monsterComposition[key].count.gt(0);
+				}
+			);
+
+			// Check if both armies are available
+			if (playerAliveUnits.length === 0 || monsterAliveUnits.length === 0) {
+				if (playerAliveUnits.length === 0) {
+					addNewMessage("Your army has been defeated");
+					setStartBattle(false);
+					return;
+				}
+				if (monsterAliveUnits.length === 0) {
+					addNewMessage("Enemy army defeated");
+					setStartBattle(false);
+					return;
+				}
+			}
+
+			// Select a unit from each faction
+			const playerUnitKey =
+				playerAliveUnits[Math.floor(Math.random() * playerAliveUnits.length)];
+			const monsterUnitKey =
+				monsterAliveUnits[Math.floor(Math.random() * monsterAliveUnits.length)];
+
+			const playerUnit = draft.playerArmy[playerUnitKey];
+			const monsterUnit = draft.monsterComposition[monsterUnitKey];
+
+			// Update units
+			const updatedMonsterUnit = processAttack(playerUnit, monsterUnit);
+			const updatedPlayerUnit = processAttack(monsterUnit, playerUnit);
+
+			draft.playerArmy[playerUnitKey] = updatedPlayerUnit;
+			draft.monsterComposition[monsterUnitKey] = updatedMonsterUnit;
+
+			// Remove unit if no longer alive
+			if (draft.playerArmy[playerUnitKey].count.eq(0)) {
+				delete draft.playerArmy[playerUnitKey];
+			}
+			if (draft.monsterComposition[monsterUnitKey].count.eq(0)) {
+				delete draft.monsterComposition[monsterUnitKey];
+			}
+		});
+	};
+
 	const processAttack = (attackingSide, defendingSide) => {
 		return produce(defendingSide, (draft) => {
 			let totalUnitAttack = attackingSide.count.times(attackingSide.attack);
@@ -189,56 +293,67 @@ const GameProvider = ({ children }) => {
 						draft.currentHealth = new Decimal(draft.health);
 					} else {
 						draft.currentHealth = new Decimal(0);
-						changeMessageLog(`${deathCount} ${defendingSide.name} killed`);
+						addNewMessage(`${deathCount} ${defendingSide.name} killed`);
 						break;
 					}
 				}
 			}
 		});
 	};
-	const processTurn = () => {
-		// Create Draft
-		return produce({ playerArmy, monsterComposition }, (draft) => {
-			// Grab current living units
-			const playerAliveUnits = Object.keys(draft.playerArmy).filter((key) => {
-				return draft.playerArmy[key].count.gt(0);
-			});
 
-			const monsterAliveUnits = Object.keys(draft.monsterComposition).filter(
-				(key) => {
-					return draft.monsterComposition[key].count.gt(0);
-				}
-			);
-
-			// Check if both armies are available
-			if (playerAliveUnits.length === 0 || monsterAliveUnits.length === 0) {
-				return;
-			}
-
-			// Select a unit from each faction
-			const playerUnitKey =
-				playerAliveUnits[Math.floor(Math.random() * playerAliveUnits.length)];
-			const monsterUnitKey =
-				monsterAliveUnits[Math.floor(Math.random() * monsterAliveUnits.length)];
-
-			const playerUnit = draft.playerArmy[playerUnitKey];
-			const monsterUnit = draft.monsterComposition[monsterUnitKey];
-
-			// Update units
-			const updatedMonsterUnit = processAttack(playerUnit, monsterUnit);
-			const updatedPlayerUnit = processAttack(monsterUnit, playerUnit);
-
-			draft.playerArmy[playerUnitKey] = updatedPlayerUnit;
-			draft.monsterComposition[monsterUnitKey] = updatedMonsterUnit;
-		});
+	const calculateTotalHealth = (army) => {
+		return Object.keys(army).reduce((sum, unitName) => {
+			return sum.plus(army[unitName].health.times(army[unitName].count));
+		}, new Decimal(0));
 	};
 
-	const updatePlayerArmy = (newArmy) => {
-		setPlayerArmy(newArmy);
+	const [playerTotalHealth, setPlayerTotalHealth] = useState(0);
+	const [monsterTotalHealth, setMonsterTotalHealth] = useState(0);
+
+	const handleSettingHealth = () => {
+		setPlayerTotalHealth(calculateTotalHealth(playerArmy));
+		setMonsterTotalHealth(calculateTotalHealth(monsterComposition));
 	};
 
-	const updateMonsterComposition = (newComposition) => {
-		setMonsterComposition(newComposition);
+	const battleSimulation = () => {
+		const {
+			playerArmy: updatedPlayerArmy,
+			monsterComposition: updatedMonsterComposition,
+		} = processTurn(playerArmy, monsterComposition);
+
+		updatePlayerArmy(updatedPlayerArmy);
+		updateMonsterComposition(updatedMonsterComposition);
+	};
+
+	const handleBattleSelect = () => {
+		setInBattle(!inBattle);
+	};
+
+	// battle simulation timer
+	useEffect(() => {
+		let battleInterval;
+		if (startBattle) {
+			battleInterval = setTimeout(battleSimulation, 1000);
+		}
+		return () => clearTimeout(battleInterval);
+	}, [startBattle, battleSimulation]);
+
+	const handleStartBattle = () => {
+		if (Object.keys(playerArmy).length > 0) {
+			setStartBattle(true);
+		}
+	};
+
+	// Text Logic
+	const [itemText, setItemText] = useState({});
+	const [descriptionText, setDescriptionText] = useState({});
+
+	const handleItemText = (textObj) => {
+		setItemText(textObj);
+	};
+
+	const handleTextChange = (textObj) => {
+		setDescriptionText(textObj);
 	};
 
 	// Navigation Logic
@@ -276,7 +391,7 @@ const GameProvider = ({ children }) => {
 			const addedNumber = new Decimal(10000);
 			setPlayerStats(
 				produce((draft) => {
-					draft.playerIncome = draft.playerIncome.plus(addedNumber);
+					draft.playerGold = draft.playerGold.plus(addedNumber);
 				})
 			);
 		}, 5000);
@@ -300,6 +415,19 @@ const GameProvider = ({ children }) => {
 				currentNav,
 				changeNavigation,
 				changePlayerStats,
+				handleMapChange,
+				currentMapSelected,
+				handleStartBattle,
+				startBattle,
+				handleBattleSelect,
+				inBattle,
+				handleInBattle,
+				battleMenu,
+				handleBattleMenu,
+				playerTotalHealth,
+				monsterTotalHealth,
+				handleSettingHealth,
+				calculateTotalHealth,
 			}}
 		>
 			{children}
